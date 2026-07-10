@@ -1,17 +1,22 @@
 extends VBoxContainer
 
-# TODO: should probably put this in a singleton later so this can be in the main menu
-
 @onready var line_edit: LineEdit = $LineEdit
+@onready var console_log: ScrollContainer = $ConsoleLog
 @onready var console_log_container: VBoxContainer = $ConsoleLog/VBoxContainer
+
+var max_scroll_length: float = 0.0 # Used to keep track of the console_log scroll length
 
 var console_visible: bool = false
 var command_history: PackedStringArray = []
-var command_index : int = -1 #
+var command_index : int = -1
+
 
 func _ready() -> void:
 	self.visible = console_visible
 	line_edit.text_submitted.connect(_console_command_entered)
+
+	max_scroll_length = console_log.get_v_scroll_bar().max_value
+	console_log_container.sort_children.connect(_auto_scroll)
 
 ## Prints a string to the debug console.
 func cprint(text_input: String, text_color: Color = Color.WHITE) -> void:
@@ -21,6 +26,7 @@ func cprint(text_input: String, text_color: Color = Color.WHITE) -> void:
 	new_text.fit_content = true
 	new_text.add_text(text_input)
 	new_text.modulate = text_color
+	_auto_scroll()
 
 # Toggle for visible and input acceptance
 func _input(event: InputEvent) -> void:
@@ -83,3 +89,9 @@ func _console_command_entered(command: String) -> void:
 		cprint("The command you have typed could not be found", Color.RED)
 	
 	line_edit.clear()
+
+# Automatically scrolls the console_log to the bottom when a new child object is added to the container
+func _auto_scroll() -> void:
+	if max_scroll_length != console_log.get_v_scroll_bar().max_value:
+		console_log.get_v_scroll_bar().value = console_log.get_v_scroll_bar().max_value
+		max_scroll_length = console_log.get_v_scroll_bar().max_value
