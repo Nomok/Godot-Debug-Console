@@ -7,7 +7,7 @@
 bg_color = Color(0, 0, 0, 0.6313726)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywevt"]
-bg_color = Color(0, 0, 0, 0.73333335)
+bg_color = Color(0, 0, 0, 0.47058824)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -34,15 +34,14 @@ mouse_behavior_recursive = 1
 script = ExtResource("1_5n8p7")
 
 [node name="ConsoleMenu" type="VBoxContainer" parent="." unique_id=1173697584]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.9990001
-anchor_bottom = 0.377
+anchor_right = 1.0
+anchor_bottom = 0.4
 offset_left = 2.0
 offset_top = 3.0
-offset_right = -9.848145
-offset_bottom = 5.70401
+offset_right = -10.0
+offset_bottom = 8.799988
 grow_horizontal = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_3psyd")
@@ -53,6 +52,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_sm63s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ConsoleMenu/ConsoleLog" unique_id=1119134228]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -72,7 +72,6 @@ deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
 virtual_keyboard_enabled = false
 caret_blink = true
-caret_force_displayed = true
 
 [node name="Stats" type="VBoxContainer" parent="." unique_id=2023789106]
 layout_mode = 1
