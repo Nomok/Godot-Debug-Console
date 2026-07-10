@@ -12,8 +12,9 @@ var command_index : int = -1
 
 func _ready() -> void:
 	line_edit.text_submitted.connect(_console_command_entered)
-	
-func print_text_to_console_log(text: String, text_color: Color) -> void:
+
+## Prints a string to the debug console.
+func cprint(text: String, text_color: Color = Color.WHITE) -> void:
 	var new_text = RichTextLabel.new()
 	console_log_cotainer.add_child(new_text)
 	new_text.owner = console_log_cotainer
@@ -68,7 +69,7 @@ func _console_command_entered(command: String) -> void:
 	#Adds the typed command whether incorrect or not into the command history 
 	if !command_history.has(command): command_history.push_back(command)
 	
-	print_text_to_console_log(">" + command, Color.GRAY)
+	cprint(">" + command, Color.GRAY)
 	
 	#This clears all previous parameters in the packedstringarray that may have been leftover in a previously typed in command 
 	#and registers the new command parameters in the packedstringarray while also seperating each of the parameters
@@ -80,15 +81,15 @@ func _console_command_entered(command: String) -> void:
 		
 		if ConsoleCommands.called_command.get_argument_count() == ConsoleCommands.arguments.size():
 			ConsoleCommands.called_command.callv(ConsoleCommands.arguments)
-			print_text_to_console_log(ConsoleCommands.output_console_text, Color.WHITE)
+			cprint(ConsoleCommands.output_console_text, Color.WHITE)
 			
 		elif ConsoleCommands.called_command.get_argument_count() > ConsoleCommands.arguments.size():
-			print_text_to_console_log(registered_command + " Has missing params", Color.RED)
+			cprint(registered_command + " Has missing params", Color.RED)
 		
 		elif ConsoleCommands.called_command.get_argument_count() < ConsoleCommands.arguments.size():
-			print_text_to_console_log(registered_command + " Has too many params", Color.RED)
+			cprint(registered_command + " Has too many params", Color.RED)
 	
 	elif !ConsoleCommands.called_command.is_valid():
-		print_text_to_console_log("The command you have typed could not be found", Color.RED)
+		cprint("The command you have typed could not be found", Color.RED)
 	
 	line_edit.clear()
