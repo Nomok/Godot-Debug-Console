@@ -26,7 +26,6 @@ func cprint(text_input: String, text_color: Color = Color.WHITE) -> void:
 	new_text.fit_content = true
 	new_text.add_text(text_input)
 	new_text.modulate = text_color
-	_auto_scroll()
 
 # Toggle for visible and input acceptance
 func _input(event: InputEvent) -> void:
