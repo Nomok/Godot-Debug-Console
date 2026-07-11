@@ -56,31 +56,28 @@ func _input(event: InputEvent) -> void:
 func _console_command_entered(command: String) -> void:
 	# Sees if the command typed in the text input in the console matches a function name and its arguments found in scr_consolecommands
 	var registered_command: String = command.get_slice(" ", 0)
-	ConsoleCommands.called_command = Callable(ConsoleCommands, registered_command)
+	var called_command: Callable = Callable(ConsoleCommands, registered_command)
 	
 	# Adds the typed command whether incorrect or not into the command history 
 	if !command_history.has(command): command_history.push_back(command)
 	
 	cprint(">" + command, Color.GRAY)
 	
-	# This clears all previous parameters in the packedstringarray that may have been leftover in a previously typed in command 
-	# and registers the new command parameters in the packedstringarray while also seperating each of the parameters
-	ConsoleCommands.arguments.clear()
-	ConsoleCommands.arguments = command.split(" ", false, 0)
-	ConsoleCommands.arguments.remove_at(0)
+	# Store the command arguments in a PackedStringArray seperated by spaces in the pushed command
+	var command_arguments : PackedStringArray = command.split(" ", false, 0)
+	command_arguments.remove_at(0)
 	
-	if ConsoleCommands.called_command.is_valid():
-		if ConsoleCommands.called_command.get_argument_count() == ConsoleCommands.arguments.size():
-			ConsoleCommands.called_command.callv(ConsoleCommands.arguments)
-			cprint(ConsoleCommands.output_console_text, Color.WHITE)
+	if called_command.is_valid():
+		if called_command.get_argument_count() == command_arguments.size():
+			called_command.callv(command_arguments)
 			
-		elif ConsoleCommands.called_command.get_argument_count() > ConsoleCommands.arguments.size():
+		elif called_command.get_argument_count() > command_arguments.size():
 			cprint(registered_command + " Has missing params", Color.RED)
 		
-		elif ConsoleCommands.called_command.get_argument_count() < ConsoleCommands.arguments.size():
+		elif called_command.get_argument_count() < command_arguments.size():
 			cprint(registered_command + " Has too many params", Color.RED)
 	
-	elif !ConsoleCommands.called_command.is_valid():
+	elif !called_command.is_valid():
 		cprint("The command you have typed could not be found", Color.RED)
 	
 	line_edit.clear()
