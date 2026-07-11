@@ -7,8 +7,8 @@ extends Node
 var max_scroll_length: float = 0.0 ## Variable used to keep track of the console_log_container scroll length.
 
 var console_visible: bool = false
-var command_history: PackedStringArray = []
-var command_index : int = -1
+var command_history: PackedStringArray = [] ## Array that stores the command history.
+var command_index : int = -1 ## Index for looking through command_history.
 
 func _ready() -> void:
 	self.visible = console_visible
@@ -26,11 +26,10 @@ func cprint(text_input: String, text_color: Color = Color.WHITE) -> void:
 	new_text.add_text(text_input)
 	new_text.modulate = text_color
 
-# Toggle for visible and input acceptance
+# Toggle for visiblity, input acceptance, and command history
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_console"):
 		console_visible =! console_visible
-		
 		if console_visible:
 			# The await is here because without it inputs "`" when it first launches and I don't like it okay. 
 			await get_tree().process_frame
@@ -50,7 +49,7 @@ func _input(event: InputEvent) -> void:
 			else: command_index = 0
 			line_edit.text = command_history[command_index]
 			line_edit.caret_column = line_edit.text.length()
-			
+
 	if event is InputEventKey and event.is_pressed() and line_edit.is_editing() and command_index != -1:
 		command_index = -1
 			
