@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-@onready var line_edit: LineEdit = $LineEdit
+@onready var line_edit: LineEdit = $PanelContainer/LineEdit
 @onready var console_log: ScrollContainer = $ConsoleLog
 @onready var console_log_container: VBoxContainer = $ConsoleLog/VBoxContainer
 
@@ -9,7 +9,6 @@ var max_scroll_length: float = 0.0 # Used to keep track of the console_log scrol
 var console_visible: bool = false
 var command_history: PackedStringArray = []
 var command_index : int = -1
-
 
 func _ready() -> void:
 	self.visible = console_visible
@@ -67,8 +66,8 @@ func _console_command_entered(command: String) -> void:
 	
 	cprint(">" + command, Color.GRAY)
 	
-	#This clears all previous parameters in the packedstringarray that may have been leftover in a previously typed in command 
-	#and registers the new command parameters in the packedstringarray while also seperating each of the parameters
+	# This clears all previous parameters in the packedstringarray that may have been leftover in a previously typed in command 
+	# and registers the new command parameters in the packedstringarray while also seperating each of the parameters
 	ConsoleCommands.arguments.clear()
 	ConsoleCommands.arguments = command.split(" ", false, 0)
 	ConsoleCommands.arguments.remove_at(0)
