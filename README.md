@@ -3,9 +3,6 @@ A cleaned up and modified version of [NotARealPerson](https://github.com/NotARea
 
 ## TODO
 - Comment more parts of `scr_debugconsole.gd`
-- Refactor command history
-- Look into bug involving Tab key
-- Fix issue with LineEdit background overlaying its text
 - Clean up `scr_consolecommands.gd`
 - New Usage Guide?
 - Improve Console Summoning?
