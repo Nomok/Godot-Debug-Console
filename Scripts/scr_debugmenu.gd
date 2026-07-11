@@ -5,6 +5,19 @@ extends Control
 @onready var max_memory_usage:Label = $Stats/PanelContainer3/HBoxContainer/Label
 @onready var video_mem:Label = $Stats/PanelContainer4/HBoxContainer/Label
 
+# Check for if object is an autoloaded singleton
+func is_autoload(node: Node) -> bool:
+	var setting_path: String = "autoload/" + node.name
+	if not ProjectSettings.has_setting(setting_path):
+		return false
+	var autoload_node: Node = get_node_or_null("/root/" + node.name)
+	return autoload_node == node
+
+# Gets rid of non-singleton instances of the object
+func _ready() -> void:
+	if not is_autoload(self):
+		self.queue_free()
+
 func _init() -> void:
 	if !OS.is_debug_build():
 		self.queue_free()

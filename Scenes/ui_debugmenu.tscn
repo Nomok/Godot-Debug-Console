@@ -6,8 +6,6 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sm63s"]
 bg_color = Color(0, 0, 0, 0.6313726)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3psyd"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywevt"]
 bg_color = Color(0, 0, 0, 0.47058824)
 border_width_left = 1
@@ -54,16 +52,11 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_sm63s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ConsoleMenu/ConsoleLog" unique_id=1119134228]
-z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="ConsoleMenu" unique_id=1903620566]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_3psyd")
-
-[node name="LineEdit" type="LineEdit" parent="ConsoleMenu/PanelContainer" unique_id=848442705]
+[node name="LineEdit" type="LineEdit" parent="ConsoleMenu" unique_id=848442705]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
@@ -76,14 +69,8 @@ emoji_menu_enabled = false
 selecting_enabled = false
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
-flat = true
 virtual_keyboard_enabled = false
 caret_blink = true
-
-[node name="ColorRect" type="ColorRect" parent="ConsoleMenu/PanelContainer" unique_id=57514237]
-z_index = -1
-layout_mode = 2
-color = Color(0, 0, 0, 0.49803922)
 
 [node name="Stats" type="VBoxContainer" parent="." unique_id=2023789106]
 layout_mode = 1
@@ -156,4 +143,4 @@ size_flags_stretch_ratio = 0.0
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 
-[connection signal="text_submitted" from="ConsoleMenu/PanelContainer/LineEdit" to="ConsoleMenu/PanelContainer/LineEdit" method="_on_text_submitted"]
+[connection signal="text_submitted" from="ConsoleMenu/LineEdit" to="ConsoleMenu/LineEdit" method="_on_text_submitted"]
