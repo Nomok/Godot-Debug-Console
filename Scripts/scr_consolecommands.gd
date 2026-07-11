@@ -2,7 +2,7 @@ extends Node
 
 @onready var console_menu = DebugMenu.get_node("ConsoleMenu")
 @onready var stats = DebugMenu.get_node("Stats")
-@onready var console_output = console_menu.get_node("ConsoleLog")
+@onready var console_output = console_menu.get_node("ConsoleLog").get_node("VBoxContainer")
 
 var called_command : Callable
 var arguments : PackedStringArray
