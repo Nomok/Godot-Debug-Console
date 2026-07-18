@@ -56,6 +56,13 @@ func _input(event: InputEvent) -> void:
 func _console_command_entered(command: String) -> void:
 	# Sees if the command typed in the text input in the console matches a function name and its arguments found in scr_consolecommands
 	var registered_command: String = command.get_slice(" ", 0)
+	
+	# Ignores a command if its name starts with an underscore
+	if registered_command.begins_with("_"):
+		cprint("The command you have typed could not be found", Color.RED)
+		line_edit.clear()
+		return
+
 	var called_command: Callable = Callable(ConsoleCommands, registered_command)
 	
 	# Adds the typed command whether incorrect or not into the command history 
@@ -70,7 +77,7 @@ func _console_command_entered(command: String) -> void:
 	if called_command.is_valid():
 		if called_command.get_argument_count() == command_arguments.size():
 			called_command.callv(command_arguments)
-			
+		
 		elif called_command.get_argument_count() > command_arguments.size():
 			cprint(registered_command + " Has missing params", Color.RED)
 		
