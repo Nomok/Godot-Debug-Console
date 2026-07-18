@@ -44,3 +44,6 @@ func change_map(levelname) -> void:
 	var level = "res://maps/" + str(levelname) + ".tscn"
 	if ResourceLoader.exists(level): get_tree().change_scene_to_file(level)
 	else: console_menu.cprint("The map labled as: " + levelname + " does not exist!", Color.RED)
+
+func quit() -> void:
+	get_tree().quit()
