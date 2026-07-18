@@ -62,7 +62,11 @@ func _console_command_entered(command: String) -> void:
 		cprint("The command you have typed could not be found", Color.RED)
 		line_edit.clear()
 		return
-
+	
+	# If the registered command matches an alias, replace it with the command it points to 
+	if ConsoleCommands.alias_dict.has(registered_command):
+		registered_command = ConsoleCommands.alias_dict.get(registered_command)
+		
 	var called_command: Callable = Callable(ConsoleCommands, registered_command)
 	
 	# Adds the typed command whether incorrect or not into the command history 
