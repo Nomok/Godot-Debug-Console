@@ -4,6 +4,10 @@ extends Node
 @onready var stats: VBoxContainer = DebugMenu.get_node("Stats") ## Vertical container for all the stats.
 @onready var console_log: VBoxContainer = console_menu.get_node("ConsoleLog").get_node("VBoxContainer") ## Vertical container that stores console logs as RichTextLabels.
 
+var alias_dict = {
+	"q" : "quit"
+}
+
 func clear() -> void:
 	for i in console_log.get_children():
 		console_log.remove_child(i)
