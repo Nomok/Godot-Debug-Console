@@ -3,10 +3,17 @@ extends Node
 @onready var console_menu: BoxContainer = DebugMenu.get_node("ConsoleMenu") ## Root of the console menu.
 @onready var stats: VBoxContainer = DebugMenu.get_node("Stats") ## Vertical container for all the stats.
 @onready var console_log: VBoxContainer = console_menu.get_node("ConsoleLog").get_node("VBoxContainer") ## Vertical container that stores console logs as RichTextLabels.
+var config = ConfigFile.new()
+var alias_dict = {}
 
-var alias_dict = {
-	"q" : "quit"
-}
+func _ready() -> void:
+	var err = config.load("user://config.cfg")
+
+	if err != OK: # If config file cannot be opened, it will be created
+		config.save("user://config.cfg")
+		
+	for key in config.get_section_keys("aliases"):
+		alias_dict[key] = config.get_value("aliases", key)
 
 func clear() -> void:
 	for i in console_log.get_children():
@@ -48,6 +55,16 @@ func change_map(levelname) -> void:
 	var level = "res://maps/" + str(levelname) + ".tscn"
 	if ResourceLoader.exists(level): get_tree().change_scene_to_file(level)
 	else: console_menu.cprint("The map labled as: " + levelname + " does not exist!", Color.RED)
-
+	
 func quit() -> void:
 	get_tree().quit()
+
+func alias(alias: String, command: String) -> void:
+	if alias_dict.has(alias):
+		alias_dict.erase(alias)
+	alias_dict.get_or_add(alias, command)
+	config.set_value("aliases", alias, command)
+	config.save("user://config.cfg")
+	
+func print_aliases() -> void:
+	console_menu.cprint(str(alias_dict))
